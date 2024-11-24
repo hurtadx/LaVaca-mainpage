@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaVaca - Tus Vacas</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Estilos globales -->
+    <link rel="stylesheet" href="TusVacas.css">  <!-- Estilos específicos -->
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-box">
+                <button class="sidebar-button" onclick="window.location.href='index.html'">Inicio</button>
+                <button class="sidebar-button active" id="btn-tus-vacas">Tus Vacas</button>
+                <button class="sidebar-button">Ajustes</button>
+            </div>
+            <div class="sidebar-bottom">
+                <button class="sidebar-button">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <header>
+                <div class="header-box">
+                    <div class="logo">
+                        <span class="logo-text">LaVaca</span>
+                        <img class="logo-image" src="logo.png" alt="Logo">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Bienvenido, Usuario</span>
+                        <img class="user-image" src="IMG/User.png" alt="Perfil">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Contenido de la página Tus Vacas -->
+            <div class="content-box">
+                <h2>Estas son tus vacas</h2>
+
+                <!-- Botón para crear vaca -->
+                <div class="button-container">
+                    <button class="create-vaca-btn" id="add-vaca-btn">
+                        <span class="plus-sign">+</span>
+                        <div class="button-title">Crear Vaca</div>
+                    </button>
+                </div>
+
+                <!-- Lista de vacas -->
+                <div class="vacas-list" id="vacas-list">
+                    <!-- Aquí se agregarán dinámicamente las vacas -->
+                    <div class="vaca-button">
+                        <span class="vaca-name">Vaca 1</span>
+                        <span class="vaca-amount">$100</span>
+                        <button class="delete-vaca-btn">X</button>  <!-- Botón de eliminar -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para agregar vaca -->
+        <div class="modal hidden" id="add-vaca-modal">
+            <div class="modal-content">
+                <h3>Crear Nueva Vaca</h3>
+                <form id="add-vaca-form">
+                    <label for="vaca-name">Nombre:</label>
+                    <input type="text" id="vaca-name" required>
+
+                    <label for="vaca-meta">Meta ($):</label>
+                    <input type="number" id="vaca-meta" required>
+
+                    <label for="vaca-fecha">Fecha de Pago:</label>
+                    <input type="date" id="vaca-fecha" required>
+
+                    <div class="modal-actions">
+                        <button type="submit">Crear Vaca</button>
+                        <button type="button" id="cancel-add-vaca">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para confirmar eliminación -->
+        <div class="modal hidden" id="delete-vaca-modal">
+            <div class="modal-content">
+                <h3>¿Eliminar Vaca?</h3>
+                <p id="delete-vaca-name"></p>
+                <div class="modal-actions">
+                    <button id="confirm-delete-vaca">Sí</button>
+                    <button id="cancel-delete-vaca">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="TusVacas.js"></script>
+</body>
+</html>
+

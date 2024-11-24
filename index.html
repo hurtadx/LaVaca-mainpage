@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaVaca - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- el sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-box">
+                <button class="sidebar-button">Inicio</button>
+                <button class="sidebar-button" id="btn-tus-vacas" onclick="window.location.href='TusVacas.html'">Tus Vacas</button>
+                <button class="sidebar-button">Ajustes</button>
+            </div>
+            <div class="sidebar-bottom">
+                <button class="sidebar-button">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <header>
+                <div class="header-box">
+                    <div class="logo">
+                        <span class="logo-text">LaVaca</span>
+                        <img class="logo-image" src="logo.png" alt="Logo">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Bienvenido, [Nombre de Usuario]</span>
+                        <img class="user-image" src="user-image.jpg" alt="Perfil">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Contenido de la página -->
+            <div class="content-box">
+                <div class="greeting">
+                    <h2>Bienvenido [Nombre de Usuario], ¿qué deseas hacer?</h2>
+                </div>
+                <div class="button-list">
+                    <button class="action-button" id="monto-total-index">
+                        <div class="button-title">Monto total</div>
+                            <div class="button-info">
+                                <p id="vaca-nombre">Vaca: Ninguna</p>
+                                <span class="amount" id="monto-total">Monto: $0 / Meta: $0</span>
+                                <div class="progress-bar">
+                                <div class="progress" id="progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button class="action-button" id="TusVacas-btn" onclick="window.location.href='TusVacas.html'">
+                        <div class="button-title">Tus Vacas</div>
+                        <div class="button-info">
+                            <span class="amount" id="vacas-count">0 Vacas</span>
+                        </div>
+                    </button>
+                
+                    <button class="action-button">
+                        <div class="button-title">Próximo Pago</div>
+                        <div class="button-info">
+                            <span class="days-left">10 días</span>
+                        </div>
+                    </button>
+
+                    <button class="action-button-wide">
+                        Últimas Transacciones
+                        <div class="transactions-list">
+                            <ul>
+                                <li>Transacción 1: $100 - Grupo A</li>
+                                <li>Transacción 2: $50 - Grupo B</li>
+                                <li>Transacción 3: $25 - Grupo C</li>
+                                <li>Transacción 4: $200 - Grupo A</li>
+                                <li>Transacción 5: $10 - Grupo B</li>
+                                <li>Transacción 6: $75 - Grupo C</li>
+                            </ul>
+                        </div>
+                        <button class="calendar-btn">Ver Más</button>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="shared.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

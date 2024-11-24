@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaVaca - Tus Vacas</title>
+    <link rel="stylesheet" href="Styles.css"> <!-- Estilos globales -->
+    <link rel="stylesheet" href="Vacas.css">  <!-- Estilos específicos -->
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-box">
+                <button class="sidebar-button" onclick="window.location.href='index.html'">Inicio</button>
+                <button class="sidebar-button active" id="btn-tus-vacas" onclick="window.location.href='TusVacas.html'">Tus Vacas</button>
+                <button class="sidebar-button">Ajustes</button>
+            </div>
+            <div class="sidebar-bottom">
+                <button class="sidebar-button">Cerrar Sesión</button>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <header>
+                <div class="header-box">
+                    <div class="logo">
+                        <span class="logo-text">LaVaca</span>
+                        <img class="logo-image" src="Logo.png" alt="Logo">
+                    </div>
+                    <div class="vaca-name" id="vaca-name">
+                        <!-- El nombre de la vaca se mostrará aquí -->
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Bienvenido, Usuario</span>
+                        <img class="user-image" src="IMG/User.png" alt="Perfil">
+                    </div>
+                </div>
+            </header>
+
+            
+            <div class="content-box">
+                <!-- Botones principales -->
+                <div class="button-list">
+                    <button class="action-button" id="monto-total-vacas">
+                        <div class="button-title">Monto Total</div>
+                        <div class="button-info" id="total-info">   
+                            <p id="monto-total">Monto: $0 / Meta: $0</p>
+                            <div class="progress-bar">
+                                <div class="progress" id="progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </button>
+
+                    <button class="action-button" id="btn-miembros" onclick="window.location.href='Miembros.html'">
+                        <div class="button-title">Miembros</div>
+                        <div class="button-info">
+                            <p id="members-count">3 Miembros</p>
+                            <div class="members-list">
+                                <img src="IMG/User.png" alt="Miembro" class="member-profile">
+                                <img src="IMG/User.png" alt="Miembro" class="member-profile">
+                                <img src="IMG/User.png" alt="Miembro" class="member-profile">
+                            </div>
+                        </div>
+                    </button>
+
+                    <button class="action-button" id="proximo-pago">
+                        <div class="button-title">Próximo Pago</div>
+                        <div class="button-info">
+                            <p id="dias-restantes">Faltan 10 días</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Gráfica dinámica -->
+                <div class="statistics-box">
+                    <h3>Estadística de Ahorro</h3>
+                    <div class="chart-placeholder">
+                        <!-- Gráfica irá aquí dinámicamente -->
+                        <p>Gráfica (Progreso del ahorro)</p>
+                    </div>
+                </div>
+                
+                <div class="floating-container">
+                    <button class="floating-button">+</button>
+                </div>
+
+                <!-- Modal para ingresar dinero -->
+                <div id="modal-ingresar" class="modal hidden">
+                    <div class="modal-content">
+                        <h3>Ingresar Dinero</h3>
+                        <input type="number" id="ingresar-monto" placeholder="Cantidad" />
+                        <div class="modal-actions">
+                            <button id="confirmar-ingreso">Confirmar</button>
+                            <button id="cancelar-ingreso">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para retirar dinero -->
+                <div id="modal-retirar" class="modal hidden">
+                    <div class="modal-content">
+                        <h3>Retirar Dinero</h3>
+                        <input type="number" id="retirar-monto" placeholder="Cantidad" />
+                        <div class="modal-actions">
+                            <button id="confirmar-retiro">Confirmar</button>
+                            <button id="cancelar-retiro">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="shared.js"></script>   
+    <script src="Vacas.js"></script>
+</body>
+</html>
+
+

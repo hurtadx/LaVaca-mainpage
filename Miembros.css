@@ -1,0 +1,182 @@
+/* General Layout */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #3f60e5;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.sidebar-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-button {
+    background-color: #3f60e5;
+    color: white;
+    border: none;
+    padding: 15px;
+    text-align: left;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar-button:hover {
+    background-color: #2f4cbf;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Content Section */
+.main-content {
+    margin-left: 250px; /* Sidebar width */
+    width: calc(100% - 250px); /* Full width minus sidebar */
+    padding: 20px;
+}
+
+/* Header Styles */
+.header-box {
+    background-color: #3f60e5;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Members Section */
+.content-box {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.button-container {
+    margin-bottom: 20px;
+}
+
+.create-vaca-btn {
+    background-color: #3f60e5;
+    color: white;
+    padding: 15px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.create-vaca-btn:hover {
+    background-color: #2f4cbf;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.members-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.member-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: center;
+}
+
+.member-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.member-card p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.delete-member-btn,
+.edit-member-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-member-btn:hover {
+    background-color: #a71d2a;
+}
+
+.edit-member-btn:hover {
+    background-color: #3e8e41;
+}
+
+/* Modal estilos */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    text-align: center;
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
