@@ -120,5 +120,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+//transacciones
+
+document.addEventListener("DOMContentLoaded", function () {
+    const transactionsList = document.querySelector('.transactions-list ul');
+    const transacciones = JSON.parse(localStorage.getItem('transacciones')) || [];
+    const vacas = JSON.parse(localStorage.getItem('vacas')) || [];
+
+    // Mostrar todas las transacciones
+    transacciones.forEach(transaccion => {
+        // Buscar el nombre de la vaca usando el id de la vaca
+        const vaca = vacas.find(v => v.id === transaccion.vacaId);
+        const vacaName = vaca ? vaca.name : 'Vaca eliminada'; // Si no se encuentra la vaca, mostrar "Vaca eliminada"
+
+        const listItem = document.createElement('li');
+        listItem.textContent = `${transaccion.date}: ${transaccion.type} - $${transaccion.amount} (${transaccion.description}) - Vaca: ${vacaName}`;
+        transactionsList.appendChild(listItem);
+    });
+});
+
 
 

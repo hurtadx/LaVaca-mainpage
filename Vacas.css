@@ -253,3 +253,110 @@ body {
 .modal-backdrop.visible {
     display: block; /* Mostrar fondo oscuro */
 }
+
+/* transacciones y estadisticas */
+
+.action-button-wide {
+    width: 100%; 
+    background-color: #3f60e5;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.action-button-wide:hover {
+    background-color: #2f4cbf;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.transactions-list {
+    max-height: 150px;
+    overflow-y: auto; /* Permite scroll */
+    margin-top: 10px;
+    width: 100%;
+}
+
+.transactions-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transactions-list li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    color: #3f60e5; /* Color principal para el texto */
+}
+
+.transactions-list li:last-child {
+    margin-bottom: 0;
+}
+
+.action-button-wide {
+    width: 100%;
+    background-color: #3f60e5;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.action-button-wide:hover {
+    background-color: #2f4cbf;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.transactions-list {
+    max-height: 150px;
+    overflow-y: auto; /* Permite scroll */
+    margin-top: 10px;
+    width: 100%;
+}
+
+.transactions-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transactions-list li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
+    color: #3f60e5;
+}
+
+.transactions-list li:last-child {
+    margin-bottom: 0;
+}
+
+#charts-container {
+    display: flex;
+    justify-content: center; /* Centra el gráfico horizontalmente */
+    align-items: center;     /* Centra el gráfico verticalmente */
+    width: 100%;             /* El contenedor sigue siendo responsivo */
+    height: 100%;            /* El contenedor sigue siendo responsivo */
+    max-width: 200px;        /* Tamaño máximo para el gráfico */
+    max-height: 200px;       /* Tamaño máximo para el gráfico */
+    margin: 0 auto;          /* Centra el contenedor en la página */
+}
+
+#pie-chart {
+    width: 45% !important; /* El canvas ocupará el 100% del contenedor */
+    height: 45% !important; /* Igualmente para la altura */
+}
+

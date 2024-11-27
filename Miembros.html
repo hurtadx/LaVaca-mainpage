@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LaVaca - Miembros</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="Miembros.css"> <!-- Estilos específicos -->
+    <link rel="stylesheet" href="Styles.css"> <!-- Estilos globales -->
+    <link rel="stylesheet" href="Miembros.css">  <!-- Estilos específicos -->
 </head>
 <body>
     <div class="container">
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar">
             <div class="sidebar-box">
-                <button class="sidebar-button"onclick="window.location.href='index.html'">Inicio</button>
-                <button class="sidebar-button active" onclick="window.location.href='TusVacas.html'">Tus Vacas</button>
-                <button class="sidebar-button">Ajustes</button>
+                <button class="sidebar-button" onclick="window.location.href='index.html'">Inicio</button>
+                <button class="sidebar-button" onclick="window.location.href='TusVacas.html'">Tus Vacas</button>
+                <button class="sidebar-button active">Ajustes</button>
             </div>
             <div class="sidebar-bottom">
                 <button class="sidebar-button">Cerrar Sesión</button>
@@ -27,7 +27,10 @@
                 <div class="header-box">
                     <div class="logo">
                         <span class="logo-text">LaVaca</span>
-                        <img class="logo-image" src="logo.png" alt="Logo">
+                        <img class="logo-image" src="Logo.png" alt="Logo">
+                    </div>
+                    <div class="vaca-name" id="vaca-name">
+                        <!-- El nombre de la vaca seleccionada se mostrará aquí -->
                     </div>
                     <div class="user-info">
                         <span class="user-name">Bienvenido, Usuario</span>
@@ -37,76 +40,62 @@
             </header>
 
             <div class="content-box">
-                <h2>Miembros de la Vaca</h2>
-
-                <!-- Botón para invitar nuevo miembro -->
-                <div class="button-container">
-                    <button class="create-vaca-btn" id="add-member-btn">
-                        <span class="plus-sign">+</span>
-                        <div class="button-title">Invitar Miembro</div>
-                    </button>
-                </div>
-
                 <!-- Lista de miembros -->
-                <div class="members-list" id="members-list">
-                    
+                <div id="members-list" class="members-list">
+                    <!-- Los miembros se mostrarán dinámicamente aquí -->
+                </div>
+
+                <!-- Botón para agregar miembro -->
+                <button id="add-member-btn" class="action-button">Agregar Miembro</button>
+            </div>
+
+            <!-- Modal para agregar miembro -->
+            <div id="add-member-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Agregar Miembro</h3>
+                    <form id="add-member-form">
+                        <label for="new-name">Nombre:</label>
+                        <input type="text" id="new-name" required>
+                        <label for="new-amount">Monto inicial:</label>
+                        <input type="number" id="new-amount" required>
+                        <label for="new-photo">Foto de perfil:</label>
+                        <input type="file" id="new-photo" accept="image/*">
+                        <div class="modal-actions">
+                            <button type="submit">Agregar</button>
+                            <button type="button" id="cancel-add">Cancelar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal de miembro -->
-        <div class="modal hidden" id="edit-member-modal">
-            <div class="modal-content">
-                <h3>Editar Miembro</h3>
-                <form id="edit-member-form">
-                    <label for="edit-name">Nombre:</label>
-                    <input type="text" id="edit-name" required>
-                    
-                    <label for="edit-photo">Foto:</label>
-                    <input type="file" id="edit-photo">
-                    
-                    <label for="edit-amount">Monto Inicial:</label>
-                    <input type="number" id="edit-amount" required>
-
-                    <div class="modal-actions">
-                        <button type="submit">Guardar Cambios</button>
-                        <button type="button" id="cancel-edit">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Modal para confirmar eliminación -->
-        <div class="modal hidden" id="confirm-delete-modal">
-            <div class="modal-content">
-                <h3>¿Eliminar miembro?</h3>
-                <p id="delete-member-name"></p>
-                <div class="modal-actions">
-                    <button id="confirm-delete-btn">Sí</button>
-                    <button id="cancel-delete-btn">No</button>
+            <!-- Modal para editar miembro -->
+            <div id="edit-member-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Editar Miembro</h3>
+                    <form id="edit-member-form">
+                        <label for="edit-name">Nombre:</label>
+                        <input type="text" id="edit-name" required>
+                        <label for="edit-amount">Monto:</label>
+                        <input type="number" id="edit-amount" required>
+                        <label for="edit-photo">Foto de perfil:</label>
+                        <input type="file" id="edit-photo" accept="image/*">
+                        <div class="modal-actions">
+                            <button type="submit">Guardar Cambios</button>
+                            <button type="button" id="cancel-edit">Cancelar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal para invitar miembro -->
-        <div class="modal hidden" id="add-member-modal">
-            <div class="modal-content">
-                <h3>Invitar Miembro</h3>
-                <form id="add-member-form">
-                    <label for="new-name">Nombre:</label>
-                    <input type="text" id="new-name" required>
-
-                    <label for="new-photo">Foto:</label>
-                    <input type="file" id="new-photo">
-
-                    <label for="new-amount">Monto Inicial:</label>
-                    <input type="number" id="new-amount" required>
-
+            <!-- Modal para confirmar eliminación -->
+            <div id="confirm-delete-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3 id="delete-member-name">¿Eliminar a este miembro?</h3>
                     <div class="modal-actions">
-                        <button type="submit">Añadir Miembro</button>
-                        <button type="button" id="cancel-add">Cancelar</button>
+                        <button id="confirm-delete-btn">Eliminar</button>
+                        <button id="cancel-delete-btn">Cancelar</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -114,4 +103,5 @@
     <script src="Miembros.js"></script>
 </body>
 </html>
+
 

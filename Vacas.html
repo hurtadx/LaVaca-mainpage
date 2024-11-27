@@ -6,6 +6,8 @@
     <title>LaVaca - Tus Vacas</title>
     <link rel="stylesheet" href="Styles.css"> <!-- Estilos globales -->
     <link rel="stylesheet" href="Vacas.css">  <!-- Estilos específicos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Librería para gráficas -->
+
 </head>
 <body>
     <div class="container">
@@ -73,14 +75,30 @@
                     </button>
                 </div>
 
-                <!-- Gráfica dinámica -->
+         <!-- Estadísticas de la vaca -->
                 <div class="statistics-box">
-                    <h3>Estadística de Ahorro</h3>
-                    <div class="chart-placeholder">
-                        <!-- Gráfica irá aquí dinámicamente -->
-                        <p>Gráfica (Progreso del ahorro)</p>
+                    <h3>Estadísticas de la Vaca</h3>
+                    <div class="charts-container">
+                        <!-- Gráfico tipo pastel -->
+                        
+                        <canvas id="pie-chart" ></canvas>
+                        
+                        <!-- Gráfico lineal -->
+                        <canvas id="line-chart" width="50" height="20"></canvas>
                     </div>
                 </div>
+
+
+                
+                <!-- Últimas Transacciones -->
+                <button class="action-button-wide">
+                    Últimas Transacciones
+                    <div class="transactions-list">
+                        <ul>
+                            <!-- Aquí se mostrarán dinámicamente las transacciones -->
+                        </ul>
+                    </div>
+                </button>
                 
                 <div class="floating-container">
                     <button class="floating-button">+</button>

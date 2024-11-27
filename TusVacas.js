@@ -12,12 +12,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const cancelDeleteVaca = document.getElementById('cancel-delete-vaca');
 
     let vacas = JSON.parse(localStorage.getItem('vacas')) || [];
+    let transacciones = JSON.parse(localStorage.getItem('transacciones')) || [];
     let vacaToDelete = null;
 
+    // Guardar vacas en localStorage
     function saveVacas() {
         localStorage.setItem('vacas', JSON.stringify(vacas));
     }
 
+    // Guardar transacciones en localStorage
+    function saveTransacciones() {
+        localStorage.setItem('transacciones', JSON.stringify(transacciones));
+    }
+
+    // Renderizar las vacas
     function renderVacas() {
         vacasList.innerHTML = '';
         vacas.forEach((vaca, index) => {
@@ -25,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             vacaButton.classList.add('vaca-button');
             vacaButton.innerHTML = `
                 <span class="vaca-name">${vaca.name}</span>
-                <span class="vaca-amount">Monto: $${vaca.meta || 0}</span>
+                <span class="vaca-amount">Monto: $${vaca.montoTotal || 0}</span>
                 <button class="delete-vaca-btn" data-index="${index}">Eliminar</button>
             `;
             vacaButton.addEventListener('click', () => {
@@ -53,14 +61,27 @@ document.addEventListener("DOMContentLoaded", function () {
     addVacaForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const newVaca = {
+            id: crypto.randomUUID(),  // Generar un ID único para cada vaca
             name: vacaNameInput.value,
             meta: parseFloat(vacaMetaInput.value),
             fecha: vacaFechaInput.value,
             montoTotal: 0
         };
 
+        // Agregar nueva vaca
         vacas.push(newVaca);
         saveVacas();
+
+        // Agregar transacción inicial para la vaca
+        transacciones.push({
+            vacaId: newVaca.id,  // Asociar transacción con la vaca usando vacaId
+            date: new Date().toISOString().split('T')[0],
+            type: "Creación",
+            amount: 0,
+            description: "Vaca creada"
+        });
+        saveTransacciones();
+
         renderVacas();
 
         addVacaForm.reset();
@@ -74,8 +95,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     confirmDeleteVaca.addEventListener('click', () => {
-        vacas.splice(vacaToDelete, 1);
+        const vacaEliminada = vacas[vacaToDelete];
+        vacas.splice(vacaToDelete, 1);  // Eliminar la vaca
         saveVacas();
+
+        // Eliminar las transacciones relacionadas con esta vaca eliminada
+        transacciones = transacciones.filter(t => t.vacaId !== vacaEliminada.id);
+        saveTransacciones();
+
         renderVacas();
         deleteVacaModal.classList.remove('show');
     });
@@ -86,3 +113,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderVacas();
 });
+
+

@@ -1,148 +1,203 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const addMemberButton = document.getElementById('add-member-btn');
-    const membersList = document.getElementById('members-list');
-    const membersCount = document.getElementById('members-count');
+    const addMemberButton = document.getElementById("add-member-btn");
+    const membersList = document.getElementById("members-list");
 
-    const editModal = document.getElementById('edit-member-modal');
-    const deleteModal = document.getElementById('confirm-delete-modal');
-    const addMemberModal = document.getElementById('add-member-modal');
+    const editModal = document.getElementById("edit-member-modal");
+    const deleteModal = document.getElementById("confirm-delete-modal");
+    const addMemberModal = document.getElementById("add-member-modal");
 
-    const editForm = document.getElementById('edit-member-form');
-    const addMemberForm = document.getElementById('add-member-form');
+    const editForm = document.getElementById("edit-member-form");
+    const addMemberForm = document.getElementById("add-member-form");
 
-    const editNameInput = document.getElementById('edit-name');
-    const editPhotoInput = document.getElementById('edit-photo');
-    const editAmountInput = document.getElementById('edit-amount');
-    const cancelEditButton = document.getElementById('cancel-edit');
+    const editNameInput = document.getElementById("edit-name");
+    const editPhotoInput = document.getElementById("edit-photo");
+    const editAmountInput = document.getElementById("edit-amount");
+    const cancelEditButton = document.getElementById("cancel-edit");
 
-    const deleteMemberName = document.getElementById('delete-member-name');
-    const confirmDeleteButton = document.getElementById('confirm-delete-btn');
-    const cancelDeleteButton = document.getElementById('cancel-delete-btn');
+    const deleteMemberName = document.getElementById("delete-member-name");
+    const confirmDeleteButton = document.getElementById("confirm-delete-btn");
+    const cancelDeleteButton = document.getElementById("cancel-delete-btn");
 
-    const newNameInput = document.getElementById('new-name');
-    const newPhotoInput = document.getElementById('new-photo');
-    const newAmountInput = document.getElementById('new-amount');
-    const cancelAddButton = document.getElementById('cancel-add');
+    const newNameInput = document.getElementById("new-name");
+    const newPhotoInput = document.getElementById("new-photo");
+    const newAmountInput = document.getElementById("new-amount");
+    const cancelAddButton = document.getElementById("cancel-add");
 
-    // Cargar miembros desde localStorage
-    let members = JSON.parse(localStorage.getItem('members')) || [
-        { name: "Usuario Predeterminado", amount: 0, image: "IMG/User.png" }
-    ];
+    const vacaSeleccionada = JSON.parse(localStorage.getItem("vacaSeleccionada")) || null;
+    if (!vacaSeleccionada) {
+        console.error("No se encontró una vaca seleccionada.");
+        return;
+    }
 
-    let editingMember = null;
-    let deletingMember = null;
+    let vacaMiembros = JSON.parse(localStorage.getItem(`miembros_${vacaSeleccionada.id}`)) || [];
+    let editingMemberIndex = null;
+    let deletingMemberIndex = null;
 
-    // Renderizar la lista de miembros
+    function saveMembers() {
+        localStorage.setItem(`miembros_${vacaSeleccionada.id}`, JSON.stringify(vacaMiembros));
+    }
+
+    function guardarCambiosVaca() {
+        const vacas = JSON.parse(localStorage.getItem("vacas")) || [];
+        const vacaIndex = vacas.findIndex((v) => v.id === vacaSeleccionada.id);
+        if (vacaIndex !== -1) {
+            vacas[vacaIndex] = vacaSeleccionada;
+            localStorage.setItem("vacas", JSON.stringify(vacas));
+        }
+    }
+
+    function registrarTransaccion(monto, descripcion) {
+        const transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
+        transacciones.push({
+            vacaId: vacaSeleccionada.id,
+            date: new Date().toISOString().split("T")[0],
+            type: "Ingreso",
+            amount: monto,
+            description: descripcion,
+        });
+        localStorage.setItem("transacciones", JSON.stringify(transacciones));
+    }
+
     function renderMembers() {
-        membersList.innerHTML = '';
-        members.forEach((member, index) => {
-            const memberCard = document.createElement('div');
-            memberCard.classList.add('member-card');
+        membersList.innerHTML = "";
+
+        vacaMiembros.forEach((member, index) => {
+            const memberCard = document.createElement("div");
+            memberCard.classList.add("member-card");
             memberCard.innerHTML = `
                 <img src="${member.image}" alt="Miembro">
                 <p>${member.name}</p>
-                <p>$${member.amount}</p>
-                <button class="edit-member-btn">Editar</button>
-                <button class="delete-member-btn">Eliminar</button>
+                <p>$${member.amount.toFixed(2)}</p>
+                <button class="edit-member-btn" data-index="${index}">Editar</button>
+                <button class="delete-member-btn" data-index="${index}">Eliminar</button>
             `;
-
-            memberCard.querySelector('.edit-member-btn').addEventListener('click', () => openEditModal(index));
-            memberCard.querySelector('.delete-member-btn').addEventListener('click', () => openDeleteModal(index));
 
             membersList.appendChild(memberCard);
         });
-        updateMembersCount();
-    }
 
-    // Actualizar el conteo de miembros
-    function updateMembersCount() {
-        membersCount.textContent = `${members.length} Miembros`;
-    }
+        document.querySelectorAll(".edit-member-btn").forEach((btn) => {
+            btn.addEventListener("click", () => openEditModal(btn.dataset.index));
+        });
 
-    // Guardar miembros en localStorage
-    function saveMembers() {
-        localStorage.setItem('members', JSON.stringify(members));
+        document.querySelectorAll(".delete-member-btn").forEach((btn) => {
+            btn.addEventListener("click", () => openDeleteModal(btn.dataset.index));
+        });
+
+        const totalDisplay = document.getElementById("total-monto-display");
+        if (totalDisplay) {
+            totalDisplay.textContent = `$${vacaSeleccionada.montoTotal?.toFixed(2) || 0}`;
+        }
     }
 
     function openEditModal(index) {
-        editingMember = index;
-        const member = members[index];
+        editingMemberIndex = index;
+        const member = vacaMiembros[index];
         editNameInput.value = member.name;
         editAmountInput.value = member.amount;
-        editPhotoInput.value = '';
-        editModal.classList.add('show');
+        editPhotoInput.value = "";
+        editModal.classList.add("show");
     }
 
     function closeEditModal() {
-        editingMember = null;
-        editModal.classList.remove('show');
+        editingMemberIndex = null;
+        editModal.classList.remove("show");
     }
 
     function openDeleteModal(index) {
-        deletingMember = index;
-        deleteMemberName.textContent = `¿Eliminar a ${members[index].name}?`;
-        deleteModal.classList.add('show');
+        deletingMemberIndex = index;
+        deleteMemberName.textContent = `¿Eliminar a ${vacaMiembros[index].name}?`;
+        deleteModal.classList.add("show");
     }
 
     function closeDeleteModal() {
-        deletingMember = null;
-        deleteModal.classList.remove('show');
+        deletingMemberIndex = null;
+        deleteModal.classList.remove("show");
     }
 
     function openAddMemberModal() {
-        addMemberModal.classList.add('show');
+        addMemberModal.classList.add("show");
     }
 
     function closeAddMemberModal() {
-        addMemberModal.classList.remove('show');
+        addMemberModal.classList.remove("show");
     }
 
-    confirmDeleteButton.addEventListener('click', () => {
-        members.splice(deletingMember, 1);
-        closeDeleteModal();
+    confirmDeleteButton.addEventListener("click", () => {
+        vacaMiembros.splice(deletingMemberIndex, 1);
         saveMembers();
         renderMembers();
+        closeDeleteModal();
     });
 
-    cancelDeleteButton.addEventListener('click', closeDeleteModal);
+    cancelDeleteButton.addEventListener("click", closeDeleteModal);
 
-    editForm.addEventListener('submit', (e) => {
+    editForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const member = members[editingMember];
+        const member = vacaMiembros[editingMemberIndex];
         member.name = editNameInput.value;
         member.amount = parseFloat(editAmountInput.value);
+
         if (editPhotoInput.files[0]) {
             const reader = new FileReader();
-            reader.onload = (e) => {
-                member.image = e.target.result;
+            reader.onload = (event) => {
+                member.image = event.target.result;
                 saveMembers();
                 renderMembers();
+                closeEditModal();
             };
             reader.readAsDataURL(editPhotoInput.files[0]);
         } else {
             saveMembers();
             renderMembers();
+            closeEditModal();
         }
-        closeEditModal();
     });
 
-    addMemberButton.addEventListener('click', openAddMemberModal);
+    addMemberButton.addEventListener("click", openAddMemberModal);
 
-    addMemberForm.addEventListener('submit', (e) => {
+    addMemberForm.addEventListener("submit", (e) => {
         e.preventDefault();
+
         const newMember = {
             name: newNameInput.value,
             amount: parseFloat(newAmountInput.value),
             image: "IMG/User.png"
         };
-        members.push(newMember);
-        saveMembers();
+
+        if (newPhotoInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                newMember.image = event.target.result;
+                agregarMiembro(newMember);
+            };
+            reader.readAsDataURL(newPhotoInput.files[0]);
+        } else {
+            agregarMiembro(newMember);
+        }
+
         closeAddMemberModal();
-        renderMembers();
     });
 
-    cancelAddButton.addEventListener('click', closeAddMemberModal);
+    function agregarMiembro(member) {
+        vacaMiembros.push(member);
+        saveMembers();
+
+        vacaSeleccionada.montoTotal = (vacaSeleccionada.montoTotal || 0) + member.amount;
+        guardarCambiosVaca();
+
+        registrarTransaccion(member.amount, `Monto inicial del miembro: ${member.name}`);
+
+        renderMembers();
+    }
+
+    cancelAddButton.addEventListener("click", closeAddMemberModal);
 
     renderMembers();
 });
+
+
+
+
+
+
 
